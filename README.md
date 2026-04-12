@@ -1,2 +1,2 @@
 # vs_website
-The source code for the validatingsouls.com website
+The source code for the validatingsouls website
