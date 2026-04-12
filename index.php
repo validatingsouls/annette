@@ -1,0 +1,501 @@
+<?php
+
+
+# IF THIS CODE IS RUNNING ON AN AWS EC2 INSTANCE THEN IT IS NOT USING PHP TO SEND EMAILS
+# EMAIL IS SENT VIA A  NODE.JS APP 
+
+
+#turn error reporting on
+// enable error reporting
+//error_reporting(E_ALL);
+//ini_set('display_errors', 'stdout');
+#Filter user input
+function filter_email_header($form_field) {
+return preg_replace('/[\0\n\r\|\!\/\<\>\^\$\%\*\&]+/','',$form_field);
+}
+function debug_to_console($data) {
+    $output = $data;
+    if (is_array($output))
+        $output = implode(',', $output);
+
+    echo "<script>console.log('Debug Objects: " . $output . "' );</script>";
+}
+if(isset($_POST['submit'])){
+    $to = "validatingsouls@gmail.com";
+    $fromform = $_POST['Email'];
+    $fromform = filter_email_header($fromform);
+    $from = "annette@validatingsouls.com";
+    //$to = "beate@localhost"; // for testing
+    //$from = "beate@localhost"; // for testing
+    $full_name = $_POST['Name'];
+    $full_name = filter_email_header($full_name);
+    $msg = $_POST['Message'];
+    $msg = filter_email_header($msg);
+    $subject = "Validating Souls Email Form submission";
+    $message = $full_name . " with email address " . $fromform . " wrote the following:" . "\n\n" . $msg;
+    $headers = "From:" . $from;
+    $sent = mail($to,$subject,$message,$headers);
+    if ($sent) {
+    }
+}
+?>
+
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<title>Validating Souls</title>
+<link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon" />
+
+<meta name="description" content="Getting back to the true you">
+<meta name="keywords" content="Meditation,Spiritual Guidance,Soul">
+
+<!-- Bootstrap4 CSS -->
+<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous"> -->
+<link rel="stylesheet" href="scss/custom.css?v20200219">
+
+<!-- Fontawesome CSS -->
+<!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous"> -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+
+<!-- Our Custom CSS -->
+<link rel="stylesheet" href="css/default.css?v20200220">
+
+<!-- jQuery CDN with Ajax! -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<!-- Popper.JS -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<!-- Bootstrap JS -->
+<!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script> -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+<!-- Material Design Bootstrap NOTE, ONLY INCLUDE WHAT IS NEEDED, OTHERWISE BOOTSTRAP STYLES ARE OVERWRITTEN!!!! -->
+<link href="scss/mdbcustom.css" rel="stylesheet">
+<!-- Material Design Bootstrap Javascript -->
+<script src="js/mdb.min.js"></script>
+<script src="js/modules/wow.min.js"></script>
+
+<style>
+.wow {
+  visibility: hidden;
+}
+</style>
+</head>
+<body style="position:relative;" data-spy="scroll" data-target="#vsnavbar" data-offset="150">
+
+<div class="container-fluid p-0">
+ <div class="container-fluid ml-auto mr-auto pl-1 pr-1" style="min-width:333px;">
+
+   <nav id="vsnavbar" class="navbar navbar-expand-lg navbar-light bg-light justify-content-between wow fixed-top">
+     <span class="navbar-text ml-1 mr-auto"><span style="font-family:'Qwigley', cursive;font-size: 24px;color: rgb(82, 0, 164);">Validating Souls</span></span>
+     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+       <span class="navbar-toggler-icon"></span>
+     </button>
+     <div class="collapse navbar-collapse" id="navbarToggler">
+       <ul class="nav navbar-nav ml-auto mt-2 mt-lg-0">
+         <li class="nav-item">
+           <a class="nav-link" href="#home">Home</a>
+         </li>
+         <li class="nav-item">
+           <a class="nav-link" href="#about">About</a>
+         </li>
+         <li class="nav-item">
+           <a class="nav-link" href="#sessions">Sessions</a>
+         </li>
+         <li class="nav-item">
+           <a class="nav-link" href="#testimonials">Testimonials</a>
+         </li>
+         <li class="nav-item">
+           <a class="nav-link" id="idcontact" href="#contact">Contact</a>
+         </li>
+       </ul>
+     </div>
+   </nav>
+
+   <div id="home" class="mr-1 ml-1 p-2 p-lg-5 bg-white text-center" style="margin-top:110px;-webkit-box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);">
+      <div class="p-2 p-lg-5 bg-white text-center" style="-webkit-box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);">
+        <img class="img-fluid wow fadeIn slower data-wow-delay='0.6s'" style="max-width;90%;" src="images/validatingsoulsV2.png" title="Validating Souls Image" />
+      </div>
+   </div>
+
+   <div class="mr-1 ml-1 p-2 p-xl-5 mt-5 bg-white text-center" style="-webkit-box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);">
+     <div class="card-group" style="margin-left:auto;margin-right:auto;">
+        <div class="card pic_card">
+          <img class="card-img-top wow fadeIn slower" src="images/cardimage1.jpg" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title text-center">Spiritual Guidance</h5>
+            <p class="card-text">Leading you towards clarity on your journey.</p>
+          </div>
+        </div>
+        <div class="card pic_card">
+          <img class="card-img-top wow fadeIn slower delay-1s data-wow-delay='0.6s'" src="images/cardimage2.jpg" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title text-center">Meditation</h5>
+            <p class="card-text">Bringing you back to your true core through the connection with the Divine.</p>
+          </div>
+        </div>
+        <div class="card pic_card">
+          <img class="card-img-top wow fadeIn slower delay-2s data-wow-delay='0.6s'" src="images/cardimage3.jpg" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title text-center">Letting Go</h5>
+            <p class="card-text">Finding a place of peace with less worry.</p>
+          </div>
+        </div>
+     </div>
+   </div>
+
+   <div id="about" class="mr-1 ml-1 p-2 p-lg-5 mt-5 bg-white" style="-webkit-box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);">
+      <div class="p-2 p-lg-5 bg-white" style="-webkit-box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);">
+        <h3 class="pl-2 pl-lg-5">About</h3>
+        <div class="d-flex flex-wrap flex-md-nowrap justify-content-end justify-content-md-between align-items-center wow fadeIn slower data-wow-delay='0.6s'">
+           <div class="p-2 pr-2 pl-lg-5 pr-md-5">
+           <p>From a very young age Annette has felt the emotions of those around her.  With training in Reiki (energy work) and The Divine Spark Method (meditation) she has been able to use this empathy as a valuable asset in guiding others through their healing process validating what they have been through and where they are at.</p>
+           <p>Annette uses this empathy along with clairvoyance to encourage her clients to live their fullest lives. It is her purpose to lessen the burden of those she connects with.</p>
+           <p>Annette has taught many classes and workshops on meditation and mindfulness techniques.  These techniques help to release emotions and traumas from the past that are no longer needed allowing us to move forward in a positive direction.</p>
+           </div>
+           <div class="p-2 pr-2 pl-lg-5 pr-md-5">
+              <img class="wow fadeIn slower data-wow-delay='0.6s'" style="width:225px;" src="images/annette.jpg" title="Annette" alt="Annette" />
+           </div>
+        </div>
+      </div>
+   </div>
+
+   <div id="sessions" class="mr-1 ml-1 p-2 p-lg-5 mt-5 bg-white" style="-webkit-box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);">
+      <div class="p-2 p-lg-5 bg-white" style="-webkit-box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);">
+        <h3 class="pl-2 pl-lg-5">Sessions</h3>
+        <div class="d-flex justify-content-between align-items-center wow fadeIn slower data-wow-delay='0.6s'">
+           <div class="p-2 p-lg-5">
+              <h4>One on One Spiritual Guidance</h4>
+              <p>A 60 minute phone session involves open minded communication, specific breathing techniques to meet your style that help to clear and align both the physical and energetic bodies and a look into specific questions you may have.  She will connect with the core of you and gently guide you back to that peaceful place in your soul.</p>
+              <h4>Grounding Meditation</h4>
+              <p>Annette will guide you by yourself or with a group of people through a simple, relaxing, easy to follow, healing meditation to address any specific concerns or needs.  This will include beginning and ending discussions about specific desires and experiences.</p>
+              <h4>Group Sessions</h4>
+              <p>To be arranged over the phone or on location based on need and distance.  These group sessions are designed to bring family, friends, or coworkers closer together to reach a desired outcome.  This session creates a safe place to openly communicate and learn about each other. During this session groups could experience a bond of understanding and compassion for each other unlike before.</p>
+           </div>
+        </div>
+      </div>
+   </div>
+
+   <div id="testimonials" class="mr-1 ml-1 p-2 p-lg-5 mt-5 bg-white" style="-webkit-box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);">
+      <div class="p-2 p-lg-5 bg-white text-center" style="-webkit-box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);">
+        <h3 class="pl-2 pl-lg-5 text-left">Testimonials</h3>
+        <div style="min-width:288px;max-width:600px;margin-left:auto;margin-right:auto;">
+          <div id="my_carousel" class="carousel slide" data-ride="carousel" data-interval="false">
+            <div class="carousel-inner wow fadeIn slower data-wow-delay='0.6s'">
+
+              <div class="carousel-item active">
+                 <div class="card">
+                    <div class="card-body p-2 p-md-4">
+                        <blockquote class="blockquote">
+                          <p class="mb-0 text-left"><i>&quot;Through years of study, training and teaching, Annette took her powerful intuition and healing abilities and cultivated them to be of service to the well-being of herself and others.
+                          She is a kind soul, a wise counselor and inspiring and playful teacher. She is a Divine Spark Practitioner and a member of our Practitioner Certification teaching team.
+                          If you have an opportunity to work with her for your own growth and wellness, please take it!&quot;</i></p>
+                          <footer class="blockquote-footer"> <cite title="Source Title">Rev. Laura Hansen, Founder/Divine Spark</cite></footer>
+                        </blockquote>
+                    </div>
+                 </div>
+              </div>
+              <div class="carousel-item">
+                 <div class="card">
+                    <div class="card-body p-2 p-md-4">
+                        <blockquote class="blockquote">
+                          <p class="mb-0 text-left"><i>&quot;I am still in disbelief! You literally unlocked the dark SECRET of my past and relieved me from my deepest pain, fears and regrets! I cannot tell you how much this means to me! You just
+                          gave me my life back.
+                          <br /><br />&quot;Also, since our session, I went off my BiPAP machine, and my blood test was NORMAL per my rheumatologist. The healing is REAL! Thank you, Annette!!!&quot;</i></p>
+                          <footer class="blockquote-footer"> <cite title="Source Title">Anonymous</cite></footer>
+                        </blockquote>
+                    </div>
+                 </div>
+              </div>
+              <div class="carousel-item">
+                 <div class="card">
+                    <div class="card-body p-2 p-md-4">
+                        <blockquote class="blockquote mt-3 bt-3">
+                          <p class="mb-0 text-left"><i>&quot;Annette has helped me come to realize what I've always known was there and to help me listen to my inner self. Although
+                                       I've been skeptical at times, she has been able to help me see that I am in control of my future. I love how she helped
+                                       make things clearer for me without ever making me feel pushed in a certain direction and she truly has everyone's greater
+                                       good in mind! She will easily become a friend you thought you always had.&quot;</i></p>
+                          <footer class="blockquote-footer mt-2"> <cite title="Source Title">Cara</cite></footer>
+                        </blockquote>
+                    </div>
+                 </div>
+              </div>
+              <div class="carousel-item">
+                 <div class="card">
+                    <div class="card-body p-2 p-md-4">
+                        <blockquote class="blockquote mt-3 bt-3">
+                          <p class="mb-0 text-left"><i>&quot;Annette is a true gift.  As a client she has helped guide me into being a better person and mama.  She does this by her calm and reassuring demeanor.
+                          I’m obviously still a huge work in progress!  I am grateful that she is non-judgmental and super trust worthy.
+                          The fact that she is Christian based leaves me at ease and comfortable with her advice.
+                          Thanks for all your true words of wisdom!;-).&quot;</i></p>
+                          <footer class="blockquote-footer"> <cite title="Source Title">Hope</cite></footer>
+                        </blockquote>
+                    </div>
+                 </div>
+              </div>
+              <div class="carousel-item">
+                 <div class="card">
+                    <div class="card-body p-2 p-md-4">
+                        <blockquote class="blockquote">
+                          <p class="mb-0 text-left"><i>&quot;What a beautiful true soul. Knowing Annette&apos;s gift exists, but not having experienced it for myself, I reached out to her when my two oldest children left for college.
+                          <br /><br />&quot;I asked for her to see if my oldest daughter was truly doing ok. She saw things in the future that I did not tell anyone about, but she reassured me that everything was ok.
+                          I talk to my daughter every day, and as time passed I was shocked that what Annette had seen for her slowly became true. Amazed!
+                          <br /><br />&quot;I asked her about my son who is just 18 months younger than my daughter and went through a bad football accident.
+                          She would tell me things for his future that of course everyone is skeptical about. Now 5 years later her &quot;foreshadowing&quot; was spot on.
+                          <br /><br />&quot;Sometimes you just need to listen and believe and let everything
+                          fall into place. Annette sees those things and as they fall into place it feels like true destiny.&quot;</i></p>
+                          <footer class="blockquote-footer"> <cite title="Source Title">Erin</cite></footer>
+                        </blockquote>
+                    </div>
+                 </div>
+              </div>
+              <div class="carousel-item">
+                 <div class="card">
+                    <div class="card-body p-2 p-md-4">
+                        <blockquote class="blockquote">
+                          <p class="mb-0 text-left"><i>&quot;I have used Annette several times, typically when I&apos;m going through &quot;something&quot; or I&apos;m in need of clearing my mind before making a big decision.
+                            Annette is so connected and intuitive, taking the time and care to address sensitive issues.  After every conversation I feel refreshed and aligned.<br /><br />
+                            &quot;When my son told me he was going to be dad.  I had so many reservations because I knew it meant him potentially moving out of state. My conversation with Annette ended with her confirming my son
+                            would move away, but that he would also return, and I would have a large role in his family&apos;s life and be close with my grandson. I was pleased when my son moved backed to
+                            California, and I am very active with my grandson. Annette was right! There have been many more examples of Annette&apos;s words coming to fruition.&quot;</i></p>
+                          <footer class="blockquote-footer"> <cite title="Source Title">Stacie</cite></footer>
+                        </blockquote>
+                    </div>
+                 </div>
+              </div>
+              <div class="carousel-item">
+                 <div class="card">
+                    <div class="card-body p-2 p-md-4">
+                        <blockquote class="blockquote">
+                          <p class="mb-0 text-left"><i>&quot;I have known Anette for nearly 12 years this summer.  She never ceases to impress me with her incredible ability to connect within and listen to her guides.
+                            As a friend, she has always been an amazing support, but her spiritual guidance is what has really blown me away on several occasions.<br /><br />
+                            &quot;Perhaps the most extraordinary time was when she was talking to me on the phone while picking up her children from school, stopped mid-sentence to say, &quot;I just saw your future husband.&quot;
+                            She had received a powerful message in that moment.  At that time, I didn&apos;t think a whole lot about it and simply giggled and said, &quot;Oh, who is that?&quot;
+                            She said, I don&apos;t know his name but I know his kids.  As these things go, not much more was said until about a week later when she ran into him again at the baseball park.
+                            She called me to let me know she had just seen him again.  Several weeks passed, but at this point I was getting curious so I inquired with some mutual community members about him.
+                            The next thing you know, they were all set to introduce us.  We agreed upon a first date which was to be a hike.
+                            We were not even ten minutes into the date and had discovered we had so many things in common and shared many similar philosophies and values.  Needless to say, the hike turned in to an all-day date and
+                            into the evening.  We have now been together 10 years this month and married over 4.<br /><br />&quot;This is just one of the many examples of Annette&apos;s wonderful ability to tap into her inner spiritual guides.
+                            Her dedication to her calling is truly awe inspiring!&quot;</i></p>
+                          <footer class="blockquote-footer"> <cite title="Source Title">Jaime</cite></footer>
+                        </blockquote>
+                    </div>
+                 </div>
+              </div>
+              <div class="carousel-item">
+                 <div class="card">
+                    <div class="card-body p-2 p-md-4">
+                        <blockquote class="blockquote">
+                          <p class="mb-0 text-left"><i>&quot;I met Annette about 10 years ago during a spin class.  I gave her permission to do a reading on me.  She later called me to discuss what she saw in her meditation.
+                            She told me things about my life she had no way of knowing.  I hung up the phone in tears and disbelief. She blew me away with her knowledge and skills.  We eventually became friends.<br /><br />
+                            &quot;She introduced me to meditation which helped me get through a very difficult and transitional time in my life.
+                            She continues to teach me how to deal with things that are out of my control and how to spread positivity into the world.<br /><br />
+                            &quot;Annette is an amazing person with an incredible gift. I am proud to call her my friend.&quot;</i></p>
+                          <footer class="blockquote-footer"> <cite title="Source Title">Val</cite></footer>
+                        </blockquote>
+                    </div>
+                 </div>
+              </div>
+              <div class="carousel-item">
+                 <div class="card">
+                    <div class="card-body p-2 p-md-4">
+                        <blockquote class="blockquote">
+                          <p class="mb-0 text-left"><i>&quot;I was going through huge changes within myself and my whole immediate family. Annette&apos;s One-on-One Spiritual Guidance helped me find my balance
+                          so I could see clearly through the chaos and move through the process with patience and understanding. The fact that she shares her gifts and talents to guide others is truly a blessing.&quot;</i></p>
+                          <footer class="blockquote-footer"> <cite title="Source Title">Machelle</cite></footer>
+                        </blockquote>
+                    </div>
+                 </div>
+              </div>
+              <div class="carousel-item">
+                 <div class="card">
+                    <div class="card-body p-2 p-md-4">
+                        <blockquote class="blockquote">
+                          <p class="mb-0 text-left"><i>&quot;I have to say I had an amazing soul enhancing phone call with Annette.  I am probably the last person who would ever talk to someone, but I felt it in my heart that I needed to hear what she had to say.
+                          During these current times of unknowns it&apos;s always great to talk with someone to make you feel like you are still on the right path or understand what potential obstacle could be in your way.
+                          <br /><br />&quot;If anyone is feeling like they would, or know anyone who would benefit from spiritual guidance, meditation or letting go please reach out to Annette.  I can&apos;t wait until my next call with her to see where this
+                          takes my life stresses and helps me center my energy on where it&apos;s important!  Thank you Annette, you are a true blessing.&quot;</i></p>
+                          <footer class="blockquote-footer"> <cite title="Source Title">Korbi</cite></footer>
+                        </blockquote>
+                    </div>
+                 </div>
+              </div>
+              <div class="carousel-item">
+                 <div class="card">
+                    <div class="card-body p-2 p-md-4">
+                        <blockquote class="blockquote">
+                          <p class="mb-0 text-left"><i>&quot;Annette truly is a very special person, and anyone who speaks with her will become aware of that very quickly. Annette has been there through many times for myself and my family
+                            in the past 10 years. Many of those times being happy and positive, and a few not so great times.
+                            <br /><br />&quot;Annette always helps me see the positive in any given situation and sheds her brilliant light wherever she goes.
+                            Annette is honest, funny and always guiding me to find balance and peace.&quot;</i></p>
+                          <footer class="blockquote-footer"> <cite title="Source Title">Tessa</cite></footer>
+                        </blockquote>
+                    </div>
+                 </div>
+              </div>
+
+
+            </div>
+            <div class="d-none d-sm-block">
+              <a class="carousel-control-prev" href="#my_carousel" role="button" data-slide="prev" style="left:-80px;">
+                <i class="fa fa-chevron-left fa-2x text-muted"></i>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a class="carousel-control-next" href="#my_carousel" role="button" data-slide="next" style="right:-80px;">
+                <i class="fa fa-chevron-right fa-2x text-muted"></i>
+                <span class="sr-only">Next</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+   </div>
+
+
+<script>
+function submitEmail() {
+	const inputBody = {
+		'Name': document.emailform.Name.value,
+                'Email': document.emailform.Email.value,
+                'Message': document.emailform.Message.value
+	}
+	fetch('/ValidatingSoulsEmail/sendemail', {
+		method: 'POST',
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify(inputBody)
+	})
+	.then(function(res) {
+		return res.text()
+	}).then(function(info) {
+		if (info === 'email sent') {
+			document.getElementById('mailresult').innerHTML = 'Mail sent.<br />Thank you, we will be in touch shortly!'
+			document.getElementById('mailresult').style.display='block'
+		}
+		else {
+          	  	document.getElementById('mailresult').innerHTML = 'An error occurred.'
+                        document.getElementById('mailresult').style.display='block'
+		}
+		document.emailform.Name.value = ''
+		document.emailform.Email.value = ''
+		document.emailform.Message.value = ''
+	})
+}
+</script>
+
+   <div id="contact" class="mr-1 ml-1 p-2 p-lg-5 bg-white" style="margin-bottom:50px;-webkit-box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);">
+      <div class="p-2 p-lg-5 bg-white" style="-webkit-box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);">
+         <h3 class="pl-2 pl-lg-5">Contact</h3>
+         <div class="pl-2 pl-lg-5 container-fluid wow fadeIn slower data-wow-delay='0.6s'">
+           <div class="d-flex flex-wrap flex-lg-nowrap justify-content-center justify-content-lg-between">
+              <div style="min-width:288px;width:30%;">
+                 <div class="mt-2"><h4><strong>Email</strong></h4></div>
+                 <div><p>annette@validatingsouls.com</p></div>
+                 <div class="mt-2"><h4><strong>Phone</strong></h4></div>
+                 <div><p>916-300-6088</p></div>
+                 <div><img class="wow fadeIn slower data-wow-delay='0.6s'" style="width:150px;" src="images/DSMCP.png" title="Divine Spark Method Certified Practitioner" alt="Divine Spark Method Certified Practitioner" /></div>
+              </div>
+              <div style="min-width:288px;width:60%;">
+                 <!-- this action will cause the same page to get reloaded and have #emailform added to the URL! 
+                 <form role="form" class="needs-validation" name="emailform" action="/ValidatingSoulsEmail/sendemail#emailform" method="get" novalidate>
+                 <div class="mt-2"><input class="form-control" type="text" name="Name" id="name" placeholder="Your Name" required style="font-size:1rem;font-family:'Roboto', sans-serif;" /><div class="invalid-feedback">Please enter name.</div></div>
+                 <div class="mt-2"><input class="form-control" type="text" name="Email" id="email" placeholder="Your Email" required style="font-size:1rem;font-family:'Roboto', sans-serif;" /><div class="invalid-feedback">Please enter valid email address.</div></div>
+                 <div class="mt-2"><textarea class="form-control" name="Message" id="message" placeholder="Your Message" required style="font-size:1rem;font-family:'Roboto', sans-serif;" rows="6"></textarea><div class="invalid-feedback">Please enter message.</div></div>
+                 <div class="mt-2"><button type="submit" name="submit" class="btn btn-primary btn-sm"><span style="font-size:1rem;font-variant-caps: normal;">Send Mail</span></button></div>
+                 <input type="hidden" id="msgtouser" value="" />
+                 </form>
+		 -->
+ 		 
+		<form role="form" class="needs-validation" name="emailform" novalidate>
+                 <div class="mt-2"><input class="form-control" type="text" name="Name" id="name" placeholder="Your Name" required style="font-size:1rem;font-family:'Roboto', sans-serif;" /><div class="invalid-feedback">Please Enter Name</div></div>
+                 <div class="mt-2"><input class="form-control" type="text" name="Email" id="email" placeholder="Your Email" required style="font-size:1rem;font-family:'Roboto', sans-serif;" /><div class="invalid-feedback">Please Enter Valid Email Address</div></div>
+                 <div class="mt-2"><textarea class="form-control" name="Message" id="message" placeholder="Your Message" required style="font-size:1rem;font-family:'Roboto', sans-serif;" rows="6"></textarea><div class="invalid-feedback">Please Enter Message</div></div>
+                 <div class="mt-2"><button type="button" onclick="submitEmail()" class="btn btn-primary btn-sm"><span style="font-size:1rem;font-variant-caps: normal;">Send Mail</span></button></div>
+                <input type="hidden" id="msgtouser" value="" />
+                 </form>
+
+                 <div class="m-2" id="mailresult" style="display:none;font-size:1rem;"></div>
+              </div>
+           </div>
+         </div>
+      </div>
+   </div>
+
+   <footer class="d-none d-sm-block">  <!-- TODO Note: dissappears below md size? -->
+     <div class="container-fluid bg-light p-2 m-0" style="-webkit-box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);">
+       <div class="row">
+         <div class="col-5 text-left">
+            <span style="font-size:10pt;">Last updated: 2020-02-26</span>
+         </div>
+         <div class="col-2 text-center">
+            <span><a target="_blank" href="https://www.facebook.com/Validating-Souls-111303457006196/"><i class="fab fa-facebook text-secondary"></i></a> | <a target="_blank" href="https://www.instagram.com/validatingsouls/"><i class="fab fa-instagram text-secondary"></i></a> | <a href="mailto:annette@validatingsouls.com"><i class="far fa-envelope text-secondary"></i></a></span>
+         </div>
+         <div class="col-5 text-right">
+           <span style="font-size:10pt;">&copy; All rights reserved &mdash; Annette HM</span>
+         </div>
+       </div>
+     </div>
+   </footer>
+
+</div>
+
+<script>
+  // validate form
+  document.emailform.addEventListener('submit', function(event) {
+    var emailRegEx = /^[a-z0-9!#$%&'*+/=?^_{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/i;
+    var lastcharRegEx = /[a-z]/i;
+    var emptychars=/\s/;
+    if (document.emailform.Email.value.search(emailRegEx) == -1 || lastcharRegEx.test(document.emailform.Email.value.substring(document.emailform.Email.value.length-1)) == false ||
+        document.emailform.Email.value.indexOf('"') >= 0 || document.emailform.Email.value.indexOf('&') >= 0 || document.emailform.Email.value.indexOf('%') >= 0 ||
+        emptychars.test(document.emailform.Email.value)) document.emailform.Email.value = "";
+    if (document.emailform.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    document.emailform.classList.add('was-validated');
+  }, false);
+
+
+  /* set active class for navigation at the top */
+  /*$(".navbar-nav .nav-link").on("click", function(){*/
+  /*  $('.navbar-nav .nav-link').removeClass('active');*/
+  /*  $(this).addClass("active");*/
+  /*});*/
+
+  // jump 100px above anchor link, see https://stackoverflow.com/questions/17534661/make-anchor-link-go-some-pixels-above-where-its-linked-to
+  // The function actually applying the offset
+  function offsetAnchor() {
+    if (location.hash.length !== 0) {
+      window.scrollTo(window.scrollX, window.scrollY - 100);
+    }
+  }
+  // Captures click events of all <a> elements with href starting with #
+  $(document).on('click', 'a[href^="#"]', function(event) {
+    // Click events are captured before hashchanges. Timeout
+    // causes offsetAnchor to be called after the page jump.
+    window.setTimeout(function() {
+      offsetAnchor();
+    }, 0);
+  });
+  // Set the offset when entering page with hash present in the url
+  window.setTimeout(offsetAnchor, 0);
+
+  // close toggle collapsible menu onclick
+  $('a.nav-link').on('click', function(){
+    $('#navbarToggler').collapse('hide');
+  });
+  $( document ).ready(function() {
+    new WOW().init(); // initialize transition effects
+    if (window.location.href.indexOf("#emailform") >= 0) {
+        $("#idcontact")[0].click();
+        document.getElementById('mailresult').style.display="block";
+    }
+    else document.getElementById('mailresult').style.display="none";
+  });
+</script>
+</body>
+</html>
